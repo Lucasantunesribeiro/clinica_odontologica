@@ -1,26 +1,324 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/**
+ * Design System Premium - Clínica Odontológica
+ *
+ * Paleta de cores:
+ * - Primary (Medical Blue): Confiança e profissionalismo
+ * - Teal Accent: Frescor e saúde
+ * - Warm Gray: Sofisticação e elegância
+ * - White/Off-white: Limpeza e clareza
+ */
+
+:root {
+  /* Raio de borda suave para clínicas */
+  --radius: 0.75rem;
+
+  /* Background e texto base - Off-white para conforto visual */
+  --background: 0 0% 99%; /* #FCFCFC - quase branco, mais suave que branco puro */
+  --foreground: 220 15% 20%; /* #2A3140 - cinza azulado escuro */
+
+  /* Cards com branco puro para destaque */
+  --card: 0 0% 100%; /* #FFFFFF */
+  --card-foreground: 220 15% 20%;
+
+  /* Popover */
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 15% 20%;
+
+  /* Primary - Medical Blue (confiável, profissional) */
+  --primary: 210 95% 48%; /* #0884E0 - azul médico vibrante */
+  --primary-foreground: 0 0% 100%;
+
+  /* Secondary - Teal suave (saúde, frescor) */
+  --secondary: 175 50% 96%; /* #F0F9F8 - teal muito claro */
+  --secondary-foreground: 175 80% 25%; /* #0D5A52 - teal escuro */
+
+  /* Muted - Cinza neutro */
+  --muted: 220 10% 96%; /* #F5F6F7 */
+  --muted-foreground: 220 10% 45%; /* #6B7280 */
+
+  /* Accent - Warm teal */
+  --accent: 175 55% 50%; /* #39B5A8 - teal médio */
+  --accent-foreground: 0 0% 100%;
+
+  /* Destructive - Vermelho suave */
+  --destructive: 0 70% 55%; /* #E74C3C */
+  --destructive-foreground: 0 0% 100%;
+
+  /* Borders - Muito suave */
+  --border: 220 10% 90%; /* #E5E7EB */
+  --input: 220 10% 90%;
+  --ring: 210 95% 48%; /* Mesmo que primary */
+
+  /* Tipografia */
+  --font-inter: "Inter", system-ui, -apple-system, sans-serif;
+  --font-playfair: "Playfair Display", Georgia, serif;
+}
+
+.dark {
+  --background: 220 15% 10%;
+  --foreground: 0 0% 95%;
+  --card: 220 15% 12%;
+  --card-foreground: 0 0% 95%;
+  --popover: 220 15% 12%;
+  --popover-foreground: 0 0% 95%;
+  --primary: 210 95% 55%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 175 30% 15%;
+  --secondary-foreground: 175 50% 85%;
+  --muted: 220 10% 20%;
+  --muted-foreground: 220 10% 60%;
+  --accent: 175 55% 45%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 70% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 220 10% 25%;
+  --input: 220 10% 25%;
+  --ring: 210 95% 55%;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" auto;
+  }
+
+  /* Tipografia elegante */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight;
+    text-wrap: balance;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold;
+    letter-spacing: -0.015em;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl font-semibold;
+    letter-spacing: -0.01em;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl font-semibold;
+  }
+
+  p {
+    text-wrap: pretty;
+    @apply leading-relaxed;
+  }
+
+  /* Links elegantes */
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  /* Imagens otimizadas */
+  img {
+    @apply select-none;
+  }
+
+  /* Scroll suave */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus states premium */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Utilities customizadas (Tailwind 4 compatível) */
+
+/* Animações personalizadas */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out;
+}
+
+/* Scrollbar personalizada (Chrome/Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted/30;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
+
+/* Selection personalizada */
+::selection {
+  @apply bg-primary/20 text-foreground;
+}
+
+::-moz-selection {
+  @apply bg-primary/20 text-foreground;
+}
+
+/* Utilities compatíveis com Tailwind 4 */
+.container-premium {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-premium {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-premium {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.section-padding {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+.section-padding-sm {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding-sm {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding-sm {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(175 55% 50%) 100%);
+}
+
+.gradient-subtle {
+  background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
+}
+
+.shadow-premium {
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 0.05),
+    0 10px 25px -5px rgb(0 0 0 / 0.08);
+}
+
+.shadow-premium-lg {
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.05),
+    0 20px 35px -10px rgb(0 0 0 / 0.1);
+}
+
+.card-hover {
+  transition: all 0.3s ease-out;
+}
+
+.card-hover:hover {
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.05),
+    0 20px 35px -10px rgb(0 0 0 / 0.1);
+  transform: translateY(-0.25rem);
 }
