@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BUSINESS } from "@/lib/constants";
 import { Button } from "./ui/button";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
@@ -9,6 +9,26 @@ import { Phone, MapPin, Clock, Menu, X } from "lucide-react";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Só oculta se estiver rolando para baixo e já tiver rolado mais de 50px
+      if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+        setIsScrollingDown(true);
+      } else {
+        setIsScrollingDown(false);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
     { href: "/", label: "Início" },
@@ -20,7 +40,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
       {/* Top Header - Informações de Contato */}
-      <div className="border-b bg-muted/30">
+      <div className={`border-b bg-muted/30 transition-transform duration-300 ease-in-out md:transform-none ${
+        isScrollingDown ? "-translate-y-full md:translate-y-0" : "translate-y-0"
+      }`}>
         <div className="container-premium">
           <div className="flex flex-wrap items-center justify-between gap-3 py-3 text-xs md:text-sm">
             <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
